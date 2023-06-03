@@ -1,6 +1,5 @@
-const { currUnixtime, getCliArg } = require("./utils.js");
-const { relayInit, getPublicKey, getEventHash, getSignature } = require("nostr-tools");
-require("websocket-polyfill");
+import { currUnixtime, getCliArg } from "./utils.ts";
+import { relayInit, getPublicKey, getEventHash, getSignature } from "nostr-tools";
 
 /* Q-1: 自分の秘密鍵をhex形式に変換して、ここに設定しよう */
 const PRIVATE_KEY_HEX = ???;
@@ -9,9 +8,8 @@ const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
 
 /**
  * テキスト投稿イベントを組み立てる
- * @param {string} content 
  */
-const composePost = (content) => {
+const composePost = (content: string) => {
   const pubkey = getPublicKey(PRIVATE_KEY_HEX); // 公開鍵は秘密鍵から導出できる
   const ev = {
     /* Q-2: イベントの pubkey, kind, content を設定してみよう */
@@ -34,7 +32,7 @@ const composePost = (content) => {
    */
 }
 
-const main = async (content) => {
+const main = async (content: string) => {
   const relay = relayInit(relayUrl);
   relay.on("error", () => {
     console.error("failed to connect");
