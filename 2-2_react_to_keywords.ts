@@ -16,7 +16,7 @@ const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
  * リアクションイベントを組み立てる
  * @param targetEvent リアクション対象のイベント
  */
-const composeReaction = (targetEvent: Event) => {
+const composeReaction = (targetEvent: Event): Event => {
   /* Q-1: リアクションイベントのフィールドを埋めよう  */
   const ev = {
     kind: ???,

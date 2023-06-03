@@ -1,4 +1,10 @@
-import { relayInit, getPublicKey, getEventHash, getSignature } from "nostr-tools";
+import { 
+  type Event,
+  relayInit,
+  getPublicKey,
+  getEventHash,
+  getSignature,
+} from "nostr-tools";
 import { currUnixtime, getCliArg } from "./utils.ts";
 
 /* Q-1: 自分の秘密鍵をhex形式に変換して、ここに設定しよう */
@@ -9,7 +15,7 @@ const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
 /**
  * テキスト投稿イベントを組み立てる
  */
-const composePost = (content: string) => {
+const composePost = (content: string): Event => {
   const pubkey = getPublicKey(PRIVATE_KEY_HEX); // 公開鍵は秘密鍵から導出できる
   const ev = {
     /* Q-2: イベントの pubkey, kind, content を設定してみよう */

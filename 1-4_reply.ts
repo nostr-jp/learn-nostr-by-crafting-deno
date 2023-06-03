@@ -1,9 +1,10 @@
 import {
+  type Event,
   relayInit,
   getPublicKey,
   getEventHash,
   getSignature,
-  nip19
+  nip19,
 } from "nostr-tools";
 import { currUnixtime, getCliArg } from "./utils.ts";
 
@@ -18,7 +19,7 @@ const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
  * @param {string} targetPubkey リプライ対象の公開鍵(hex)
  * @param {string} targetEventId リプライ対象の投稿のイベントID(hex)
  */
-const composeReplyPost = (content: string, targetPubkey: string, targetEventId: string) => {
+const composeReplyPost = (content: string, targetPubkey: string, targetEventId: string): Event => {
   const myPubkey = getPublicKey(PRIVATE_KEY_HEX);
 
   // 発展課題のヒント: NIP-27に準拠するには、ここでcontentに手を加えることになります
