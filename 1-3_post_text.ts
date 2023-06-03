@@ -1,5 +1,5 @@
-import { currUnixtime, getCliArg } from "./utils.ts";
 import { relayInit, getPublicKey, getEventHash, getSignature } from "nostr-tools";
+import { currUnixtime, getCliArg } from "./utils.ts";
 
 /* Q-1: 自分の秘密鍵をhex形式に変換して、ここに設定しよう */
 const PRIVATE_KEY_HEX = ???;

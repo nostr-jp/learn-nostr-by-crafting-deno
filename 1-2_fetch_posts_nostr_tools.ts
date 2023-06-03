@@ -1,5 +1,5 @@
-import { currUnixtime } from "./utils.ts";
 import { relayInit } from "nostr-tools";
+import { currUnixtime } from "./utils.ts";
 
 const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
 
