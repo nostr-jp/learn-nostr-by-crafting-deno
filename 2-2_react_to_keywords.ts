@@ -1,10 +1,11 @@
-const { currUnixtime, getCliArg } = require("./utils.js");
-const {
-  relayInit,
+import {
+  type Event,
+  type Relay,
+  finishEvent,
   getPublicKey,
-  finishEvent
-} = require("nostr-tools");
-require("websocket-polyfill");
+  relayInit,
+} from "nostr-tools";
+import { currUnixtime, getCliArg } from "./utils.ts";
 
 /* Bot用の秘密鍵をここに設定 */
 const BOT_PRIVATE_KEY_HEX = ???;
@@ -13,9 +14,9 @@ const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
 
 /**
  * リアクションイベントを組み立てる
- * @param {import("nostr-tools").Event} targetEvent リアクション対象のイベント
+ * @param targetEvent リアクション対象のイベント
  */
-const composeReaction = (targetEvent) => {
+const composeReaction = (targetEvent: Event) => {
   /* Q-1: リアクションイベントのフィールドを埋めよう  */
   const ev = {
     kind: ???,
@@ -29,7 +30,7 @@ const composeReaction = (targetEvent) => {
 };
 
 // リレーにイベントを送信
-const publishToRelay = (relay, ev) => {
+const publishToRelay = (relay: Relay, ev: Event) => {
   const pub = relay.publish(ev);
   pub.on("ok", () => {
     console.log("succeess!");
@@ -39,7 +40,7 @@ const publishToRelay = (relay, ev) => {
   });
 };
 
-const main = async (targetWord) => {
+const main = async (targetWord: string) => {
   const relay = relayInit(relayUrl);
   relay.on("error", () => {
     console.error("failed to connect");
