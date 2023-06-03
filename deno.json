@@ -1,5 +1,10 @@
 {
   "imports": {
     "nostr-tools": "npm:nostr-tools@^1.11.1"
+  },
+  "tasks": {
+    "to-hex": "deno run scripts/to_hex.ts",
+    "gen-key-pair": "deno run scripts/gen_key_pair.ts",
+    "sub-reply": "deno run -A scripts/sub_reply.ts"
   }
 }

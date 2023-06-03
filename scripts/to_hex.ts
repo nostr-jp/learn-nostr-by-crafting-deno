@@ -1,13 +1,13 @@
-const { nip19 } = require("nostr-tools");
+import { nip19 } from "nostr-tools";
 
-if (process.argv.length <= 2) {
+if (Deno.args.length === 0) {
   console.error(
     "usage: npm run to-hex <bech32 ID (npub, nprofile, nsec, note, nevent)>"
   );
-  process.exit(1);
+  Deno.exit(1);
 }
 
-const { type, data } = nip19.decode(process.argv[2]);
+const { type, data } = nip19.decode(Deno.args[0]);
 
 const out = (() => {
   switch (type) {
