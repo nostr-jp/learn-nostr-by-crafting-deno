@@ -1,12 +1,11 @@
-const { currUnixtime, getCliArg } = require("./utils.js");
-const {
+import {
   relayInit,
   getPublicKey,
   getEventHash,
   getSignature,
   nip19
-} = require("nostr-tools");
-require("websocket-polyfill");
+} from "nostr-tools";
+import { currUnixtime, getCliArg } from "./utils.ts";
 
 /* 自分の秘密鍵をhex形式に変換して、ここに設定*/
 const PRIVATE_KEY_HEX = ???;
@@ -19,7 +18,7 @@ const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
  * @param {string} targetPubkey リプライ対象の公開鍵(hex)
  * @param {string} targetEventId リプライ対象の投稿のイベントID(hex)
  */
-const composeReplyPost = (content, targetPubkey, targetEventId) => {
+const composeReplyPost = (content: string, targetPubkey: string, targetEventId: string) => {
   const myPubkey = getPublicKey(PRIVATE_KEY_HEX);
 
   // 発展課題のヒント: NIP-27に準拠するには、ここでcontentに手を加えることになります
@@ -42,7 +41,7 @@ const composeReplyPost = (content, targetPubkey, targetEventId) => {
   return { ...ev, id, sig };
 };
 
-const main = async (content) => {
+const main = async (content: string) => {
   const relay = relayInit(relayUrl);
   relay.on("error", () => {
     console.error("failed to connect");
