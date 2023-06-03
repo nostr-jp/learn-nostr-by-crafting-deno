@@ -1,5 +1,4 @@
-const { currUnixtime } = require("./utils.js");
-require("websocket-polyfill");
+import { currUnixtime } from "./utils.ts";
 
 /* Q(おまけ): URLを変更して、別のリレーの様子も見てみよう */
 const relayUrl = "wss://relay-jp.nostr.wirednet.jp"; 
