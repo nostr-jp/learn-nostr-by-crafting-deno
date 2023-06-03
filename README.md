@@ -1,14 +1,23 @@
-# 「手を動かして学ぶ Nostrプロトコル」 演習環境
+# 「手を動かして学ぶ Nostrプロトコル」演習環境 (Deno版)
 [Hello Nostr! 先住民が教えるNosteの歩き方](https://nip-book.nostr-jp.org/book/1/) ([技術書典](https://techbookfest.org/)にて頒布) 内の記事「手を動かして学ぶ Nostrプロトコル」(pp.65-75) の演習環境を含むリポジトリです。
 
 ## 演習環境のセットアップ
 
-以下のコマンドで演習環境をセットアップします。実行前に、Node.jsをインストールしておいてください。
+まず、[Deno](https://deno.com/runtime)をインストールします(既にインストール済みの場合はスキップしてください)。
 
 ```bash
-git clone https://github.com/nostr-jp/learn-nostr-by-crafting.git
-cd learn-nostr-by-crafting
-npm install
+# macOS または Linux の場合
+curl -fsSL https://deno.land/x/install/install.sh | sh
+
+# Windows の場合 (PowerShell)
+irm https://deno.land/install.ps1 | iex
+```
+
+次に、以下のコマンドで演習環境をクローンし、演習環境のディレクトリに移動します。
+
+```bash
+git clone https://github.com/nostr-jp/learn-nostr-by-crafting-deno.git
+cd learn-nostr-by-crafting-deno
 ```
 
 ## 演習の進め方
@@ -16,12 +25,17 @@ npm install
 演習環境には、演習の各節に対応するソースファイルが用意されています。ファイル名の先頭(1-1〜2-3)が、対応する節を表します。 
 本文の説明に従ってソースコードの /* Q-1: ... */ となっている部分に適切なコードを書いて、目的の機能を実装していきましょう。
 
-実装が完了したら、`node 1-1_fetch_posts_raw_ws.js` のようにして実行してください。
+実装が完了したら、以下のようにして実行します。
+
+```
+deno run -A 1-1_fetch_posts_raw_ws.ts
+```
+
 一部のプログラムは、実行時にコマンドライン引数を渡す必要がありますのでご注意ください。
 
-## npmスクリプト
+## Deno Task
 
-以下のnpmスクリプトが用意されていますので、必要に応じて利用してください。
+以下のDeno taskが用意されていますので、必要に応じて利用してください。
 
 - `gen-key-pair`: 秘密鍵と公開鍵のペアを生成
 - `to-hex <bech32形式のデータ>`: `npub...` `nsec...` のようなフォーマット(bech32形式といいます)のデータを、16進文字列形式に変換
