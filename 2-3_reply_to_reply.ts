@@ -1,30 +1,31 @@
-const { currUnixtime } = require("./utils.js");
-const {
+import {
+  type Event,
+  type Relay,
   relayInit,
   getPublicKey,
   finishEvent,
-  nip19
-} = require("nostr-tools");
-require("websocket-polyfill");
+  nip19,
+} from "nostr-tools";
+import { currUnixtime }from "./utils.ts";
 
 /* Bot用の秘密鍵をここに設定 */
-const BOT_PRIVATE_KEY_HEX = ???;
+const BOT_PRIVATE_KEY_HEX = "";
 
 const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
 
 /**
  * テキスト投稿イベント(リプライ)を組み立てる
- * @param {string} content 投稿内容
- * @param {import("nostr-tools").Event} targetEvent リプライ対象のイベント
+ * @param content 投稿内容
+ * @param targetEvent リプライ対象のイベント
  */
-const composeReplyPost = (content, targetEvent) => {
+const composeReplyPost = (content: string, targetEvent: Event) => {
   /* Q-1: これまで学んだことを思い出しながら、
           リプライを表現するイベントを組み立てよう */
   ???;
 };
 
 // リレーにイベントを送信
-const publishToRelay = (relay, ev) => {
+const publishToRelay = (relay: Relay, ev: Event) => {
   const pub = relay.publish(ev);
   pub.on("ok", () => {
     console.log("succeess!");
@@ -43,7 +44,7 @@ const lastReplyTimePerPubkey = new Map()
 
 // 引数の公開鍵にリプライしても安全か?
 // 最後にリプライを返した時点からクールタイム分の時間が経過していない場合、安全でない
-const isSafeToReply = (pubkey) => {
+const isSafeToReply = (pubkey: string) => {
   const now = currUnixtime()
   const lastReplyTime = lastReplyTimePerPubkey.get(pubkey)
   if (lastReplyTime !== undefined && now - lastReplyTime < COOL_TIME_DUR_SEC) {
