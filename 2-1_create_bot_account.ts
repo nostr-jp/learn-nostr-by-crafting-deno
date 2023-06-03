@@ -1,11 +1,9 @@
-const { currUnixtime } = require("./utils.js");
-const {
-  relayInit,
-  getPublicKey,
+import {
   finishEvent,
-  nip19,
-} = require("nostr-tools");
-require("websocket-polyfill");
+  getPublicKey,
+  relayInit
+} from "nostr-tools";
+import { currUnixtime } from "./utils.ts";
 
 /* Q-1: Bot用に新しい秘密鍵を生成して、ここに設定しよう */
 const BOT_PRIVATE_KEY_HEX = ???;
@@ -15,7 +13,6 @@ const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
 
 /**
  * メタデータ(プロフィール)イベントを組み立てる
- * @param {string} content
  */
 const composeMetadata = () => {
   /* Q-2: Botアカウントのプロフィールを設定しよう  */
