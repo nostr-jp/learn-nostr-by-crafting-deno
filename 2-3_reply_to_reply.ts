@@ -6,10 +6,10 @@ import {
   finishEvent,
   nip19,
 } from "nostr-tools";
-import { currUnixtime }from "./utils.ts";
+import { currUnixtime } from "./utils.ts";
 
 /* Bot用の秘密鍵をここに設定 */
-const BOT_PRIVATE_KEY_HEX = "";
+const BOT_PRIVATE_KEY_HEX = ???;
 
 const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
 
@@ -18,7 +18,7 @@ const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
  * @param content 投稿内容
  * @param targetEvent リプライ対象のイベント
  */
-const composeReplyPost = (content: string, targetEvent: Event) => {
+const composeReplyPost = (content: string, targetEvent: Event): Event => {
   /* Q-1: これまで学んだことを思い出しながら、
           リプライを表現するイベントを組み立てよう */
   ???;
@@ -43,15 +43,19 @@ const COOL_TIME_DUR_SEC = 60
 const lastReplyTimePerPubkey = new Map()
 
 // 引数の公開鍵にリプライしても安全か?
-// 最後にリプライを返した時点からクールタイム分の時間が経過していない場合、安全でない
-const isSafeToReply = (pubkey: string) => {
-  const now = currUnixtime()
-  const lastReplyTime = lastReplyTimePerPubkey.get(pubkey)
-  if (lastReplyTime !== undefined && now - lastReplyTime < COOL_TIME_DUR_SEC) {
-    return false
+// リプライの時刻が十分古い場合・最後にリプライを返した時点からクールタイム分の時間が経過していない場合、安全でない
+const isSafeToReply = ({ pubkey, created_at }: Event): boolean => {
+  const now = currUnixtime();
+  if (created_at < now - COOL_TIME_DUR_SEC) {
+    return false;
   }
-  lastReplyTimePerPubkey.set(pubkey, now)
-  return true
+
+  const lastReplyTime = lastReplyTimePerPubkey.get(pubkey);
+  if (lastReplyTime !== undefined && now - lastReplyTime < COOL_TIME_DUR_SEC) {
+    return false;
+  }
+  lastReplyTimePerPubkey.set(pubkey, now);
+  return true;
 }
 
 // メイン関数
@@ -70,7 +74,7 @@ const main = async () => {
 
   sub.on("event", (ev) => {
     // リプライしても安全なら、リプライイベントを組み立てて送信する
-    if (isSafeToReply(ev.pubkey)) {
+    if (isSafeToReply(ev)) {
       const replyPost = composeReplyPost("こんにちは！", ev);
       publishToRelay(relay, replyPost);
     }
