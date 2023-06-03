@@ -1,6 +1,5 @@
-const { currUnixtime } = require("./utils.js");
-const { relayInit } = require("nostr-tools");
-require("websocket-polyfill");
+import { currUnixtime } from "./utils.ts";
+import { relayInit } from "nostr-tools";
 
 const relayUrl = "wss://relay-jp.nostr.wirednet.jp";
 
