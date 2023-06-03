@@ -35,7 +35,7 @@ deno run -A 1-1_fetch_posts_raw_ws.ts
 
 ## Deno Task
 
-以下のDeno taskが用意されていますので、必要に応じて利用してください。
+以下のDeno Taskが用意されていますので、必要に応じて利用してください。例えば `deno task gen-key-pair` のようにして実行します。
 
 - `gen-key-pair`: 秘密鍵と公開鍵のペアを生成
 - `to-hex <bech32形式のデータ>`: `npub...` `nsec...` のようなフォーマット(bech32形式といいます)のデータを、16進文字列形式に変換
