@@ -35,15 +35,15 @@ const publishToRelay = (relay: Relay, ev: Event) => {
   });
 };
 
-/* 無限リプライループ対策 */
+/* 暴走・無限リプライループ対策 */
 // リプライクールタイム
 const COOL_TIME_DUR_SEC = 60
 
 // 公開鍵ごとに、最後にリプライを返した時刻(unixtime)を保持するMap
 const lastReplyTimePerPubkey = new Map()
 
-// 引数の公開鍵にリプライしても安全か?
-// リプライの時刻が十分古い場合・最後にリプライを返した時点からクールタイム分の時間が経過していない場合、安全でない
+// 引数のイベントにリプライしても安全か?
+// 対象の発行時刻が古すぎる場合・最後にリプライを返した時点からクールタイム分の時間が経過していない場合、安全でない
 const isSafeToReply = ({ pubkey, created_at }: Event): boolean => {
   const now = currUnixtime();
   if (created_at < now - COOL_TIME_DUR_SEC) {
@@ -73,10 +73,14 @@ const main = async () => {
   const sub = ???;
 
   sub.on("event", (ev) => {
-    // リプライしても安全なら、リプライイベントを組み立てて送信する
-    if (isSafeToReply(ev)) {
-      const replyPost = composeReplyPost("こんにちは！", ev);
-      publishToRelay(relay, replyPost);
+    try {
+      // リプライしても安全なら、リプライイベントを組み立てて送信する
+      if (isSafeToReply(ev)) {
+        const replyPost = composeReplyPost("こんにちは！", ev);
+        publishToRelay(relay, replyPost);
+      }
+    } catch (err) {
+      console.error(err);
     }
   });
 };
