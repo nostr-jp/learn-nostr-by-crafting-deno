@@ -1,6 +1,6 @@
 {
   "imports": {
-    "nostr-tools": "npm:nostr-tools@^1.11.1"
+    "nostr-tools": "npm:nostr-tools@1.13.1"
   },
   "tasks": {
     "to-hex": "deno run scripts/to_hex.ts",
